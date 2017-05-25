@@ -1,0 +1,126 @@
+@import '../variables_styles';
+.{$theme-name} {
+	.clearfix {
+  		&:before,
+  		&:after {
+    		content: " "; // 1
+    		display: table; // 2
+  		}
+  		&:after {
+    		clear: both;
+  		}
+	}
+
+	.dijitContentPane {
+		padding: 0;
+	}
+	
+	.main-side-nav{
+		background-color:$grey-900;
+		color:$white;
+		/*padding: 5px 15px 0 15px;*/
+		padding: 5px;
+		width:230px;
+	}
+	
+	.dijitTreeExpandoOpened:before {
+		content: "\f012";
+	}
+
+	.dijitTreeExpandoClosed:before {
+		content: "\f011";
+	}	
+
+	.dijitTreeRowHover, .dijitTreeRowActive {
+		background-color: lightness($theme-base, 60%) ;
+		color: $tree-row-selected-text-color;
+	}
+	
+	/*#top-menu-wrapper{width:480px;}*/
+	
+	.pull-left{float:left;}
+	.pull-right{float:right;}
+	
+	
+	
+	.main-header{
+		.dijitMenuItem, {			
+			width: $mainNavMenuItemWidth;
+			line-height : $mainNavMenuItemLineHeight;
+			/*height:50px;*/
+			padding:0;
+			font-size: $icon-size;
+			text-align: center;
+			margin-right: -4px;
+			background-color: $grey-900;
+			color:$white;
+			&:hover{
+				background-color: $blue-500;
+			}
+		}
+		.dijitMenuItemSelected{background-color: $blue-500;}
+		
+		tr.dijitPopupMenuItem{
+			display: inline-table;
+			height: $mainNavMenuItemLineHeight;
+			td{
+				padding:0;
+				line-height : $mainNavMenuItemLineHeight;
+			}
+			td.dijitMenuItemLabel{
+				padding-left:5px;				
+			}
+			
+		}
+	}
+	
+	#content-container{margin:5px 2px 1px 2px;}	
+}
+
+
+.main-header{
+	background-color:$blue-500 !important;
+	.navbar-brand{
+		color:$grey-100;
+		height:50px;
+		line-height: 50px;
+		font-size: 18px;
+		text-decoration: none;
+		background-color: $blue-700;
+		display: block;
+		width:210px;
+		padding: 0 15px 0 15px;
+	}
+	
+	.pull-right{
+		a.info-item{		
+			display:block;
+			width:50px;
+			height:50px;
+			line-height:50px;
+			text-align:center;
+			font-size:16px;
+			
+			color:$grey-200;
+			background-color:$grey-800;
+			
+			float:left;
+			&:after{clear:both;}
+			&:hover{color:$grey-800;background-color:$grey-200;}
+		}
+		/*a.info-item:last{margin-right:0 !important;}*/
+	}
+}
+.fa{font-family: FontAwesome !important;width:$icon-size;text-align:center;}
+
+[class^="dijitIcon"], [class*="dijitIcon"]{
+	font-family: 'flat-icon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}

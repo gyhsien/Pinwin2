@@ -1,0 +1,130 @@
+<?= $this->doctype() ?>
+<html>
+<head>
+<meta charset="UTF-8">
+<?= $this->headTitle('')->setSeparator(' - ')->setAutoEscape(false) ?>
+<?=
+    $this->headLink()
+	->appendStylesheet($this->basePath().'/assets/release/dojo/themes/flat/flat.min.css')
+    ->appendStylesheet($this->basePath().'/assets/release/bootstrap/css/login.css')
+    ->appendStylesheet($this->basePath().'/assets/release/pinwin/flat-styles.min.css')
+?>
+<style type="text/css">body{height:auto;}</style>
+</head>
+<body class="hold-transition login-page flat">
+
+	<div id="loadingOverlayWrapper" class="loadingOverlayWrapper">
+		<div class="loadingOverlay"></div>
+	</div>
+
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="javascript:;"><b>Pinwin2</b>&nbsp;Admin</a>
+      </div>
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+        <p class="login-box-msg"></p>
+    
+        <form 
+        	id="loginForm"
+        	action="<?=$this->url('board')?>/login/login" 
+        	method="post">
+          
+          <div class="form-group">
+          	<div class="input-group">
+          		<span class="input-group-addon">
+          			<i class="glyphicon glyphicon-user"></i>
+          		</span>
+                <input 
+                	id="account" 
+                	name="account" 
+                	type="text" 
+                	class="form-control" 
+                	placeholder="<?=$this->translate('帳號')?>">
+          	</div>
+            <span 
+            	class="help-block glyphicon glyphicon-exclamation-sign"
+              	data-message="<?=$this->escapeHtml(json_encode(array(
+              	    'missing'=>$this->translate('請輸入帳號'),
+              	)))?>">
+            </span>
+          
+          </div>
+          
+          <div class="form-group">
+          	<div class="input-group">
+                <span class="input-group-addon">
+                	<i class="glyphicon glyphicon-lock"></i>
+                </span>          	
+            	<input 
+            		id="password" 
+            		name="password" 
+            		type="password" 
+            		class="form-control" 
+            		placeholder="<?=$this->translate('密碼')?>">
+            </div>
+            <span 
+            	class="help-block glyphicon glyphicon-exclamation-sign"
+              	data-message="<?=$this->escapeHtml(json_encode(array(
+              	    'missing'=>$this->translate('請輸入密碼'),
+              	)))?>">
+            </span>
+          </div>
+          
+          <div class="form-group">
+              <div class="input-group">
+              	<input 
+              		id="captcha" 
+              		name="captcha" 
+              		type="text" 
+              		class="form-control" 
+              		placeholder="<?=$this->translate('驗證碼')?>">
+              	<span class="input-group-addon input-group-addcaptcha">
+                	<img 
+                		src="<?=$this->basePath()?>/webservice/captcha" 
+                		onclick="this.src='<?=$this->basePath()?>/webservice/captcha?r='+Math.random()">
+                </span>	
+              </div>
+              <span 
+              	class="help-block glyphicon glyphicon-exclamation-sign" 
+              	data-message="<?=$this->escapeHtml(json_encode(array(
+              	    'missing'=>$this->translate('請輸入驗證碼'),
+              	    'inVaild'=>str_replace(array('%length%'), array('5'), $this->translate('輸入長度需等於%length%個字符'))
+              	)))?>">
+              </span>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-8">
+              <!--
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> <?=$this->translate('記住我')?>
+                </label>
+              </div>
+              -->
+            </div>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat"><?=$this->translate('登入')?></button>
+            </div>
+          </div>
+          
+        </form>
+    
+    
+        <!--<a href="javascript:;"><?=$this->translate('忘記密碼')?></a><br>-->
+        <!--<a href="register.html" class="text-center">Register a new membership</a>-->
+    
+      </div>
+      <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+	<?=
+	$this->footScript()
+	->appendDojo($this->basePath().'/assets/release/dojo/dojo/dojo.js')
+	->appendFile($this->basePath().'/assets/js/loadOverlay.js')
+	->appendFile($this->basePath().'/module/Board/public/js/login.js')
+	?>
+
+</body>
+</html>

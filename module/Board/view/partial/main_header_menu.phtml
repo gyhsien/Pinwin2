@@ -1,0 +1,56 @@
+<div data-dojo-type="dijit/MenuBar">
+	<?php foreach ($menus as $value){ ?>
+	<div id="<?=$value['id']?>" data-dojo-type="dijit/PopupMenuItem">
+		<span><i class="fa <?=$value['icon']?>" aria-hidden="true"></i></span>
+	
+		<div data-dojo-type="dijit/Menu">
+		
+		<?php foreach ($value['childs'] as $sun){ ?>
+			
+			<?php if(isset($sun['childs'])){ ?>
+			
+			<div dojoType="dijit/PopupMenuItem">
+				<span>
+					<?php if(isset($sun['icon'])){ ?>
+					<i class="fa <?=$sun['icon']?>" aria-hidden="true"></i>
+					<?php } ?>
+					<?=$this->translate($sun['label'])?>
+				</span>
+				<div dojoType="dijit/Menu">
+					<?php foreach ($sun['childs'] as $grandsun){ ?>
+					<div dojoType="dijit/MenuItem">
+						<?php if(isset($grandsun['icon'])){ ?>
+						<i class="fa <?=$grandsun['icon']?>" aria-hidden="true"></i>
+						<?php } ?>
+						<?=$this->translate($grandsun['label'])?>
+					</div>
+					<?php } ?>
+				</div>
+			</div>
+			
+			<?php }else{ ?>
+			
+			<div data-dojo-type="dijit/MenuItem">
+				<?php if(isset($sun['icon'])){ ?>
+				<i class="fa <?=$sun['icon']?>" aria-hidden="true"></i>
+				<?php } ?>
+				<?=$this->translate($sun['label'])?>
+			</div>
+			
+			<?php } ?>
+			
+		<?php } ?>
+		
+		</div>
+	</div>
+	<?php } ?>
+</div>
+<div id="main-header-tooltip-box">
+	<?php foreach ($menus as $value){ ?>
+	<div
+		data-dojo-type="dijit/Tooltip"
+		data-dojo-props="connectId:'<?=$value['id']?>',position:['below']">
+		<?=$this->translate($value['label'])?>
+	</div>
+	<?php } ?>
+</div>

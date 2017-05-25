@@ -1,0 +1,53 @@
+<?= $this->doctype() ?>
+<html>
+<head>
+<meta charset="UTF-8">
+<?=
+    $this->headLink()
+    ->appendStylesheet($this->basePath().'/assets/release/dojo/themes/flat/flat.min.css')
+    ->appendStylesheet($this->basePath().'/assets/release/bootstrap/frontend.css')
+    ->appendStylesheet($this->basePath().'/assets/release/pinwin/flat-styles.min.css')
+    ->appendStylesheet($this->basePath().'/assets/release/font-awesome/css/font-awesome.min.css')
+?>
+<style type="text/css">
+body{height:auto;}
+#passwordForm .form-group{
+    margin: 75px auto;
+    width:480px;
+}
+</style>
+</head>
+<body class="flat">
+
+	<div id="loadingOverlayWrapper" class="loadingOverlayWrapper">
+		<div class="loadingOverlay"></div>
+	</div>
+	
+	<div class="container">
+		<form 
+			id="passwordForm"
+			class="form-horizontal"
+			action="<?=$this->url('board')?>/login/init-admin-password"
+			method="post">
+			<div class="form-group">
+				<div class="input-group">
+					<input name="token" type="hidden" value="<?=$this->token?>">
+					<input type="text" class="form-control" name="password" placeholder="<?=$this->translate('您尚未設定最高權限的管理員密碼')?>">
+					<div class="input-group-btn">
+						<button class="btn btn-primary" type="button">產生密碼</button>
+						<button class="btn btn-success" type="submit">送出密碼</button>
+					</div>
+				</div>
+			</div>
+				
+		</form>	
+	</div>
+	
+	<?=
+	$this->footScript()
+	->appendDojo($this->basePath().'/assets/release/dojo/dojo/dojo.js')
+	->appendFile($this->basePath().'/assets/release/dojo/loadOverlay.js')
+	->appendFile($this->basePath().'/module/Board/public/js/init_password.js')
+	?>
+</body>
+</html>

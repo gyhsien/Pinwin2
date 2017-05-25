@@ -1,0 +1,90 @@
+<?= $this->doctype() ?>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<?= $this->headTitle('Pinwin')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= 
+        $this->headLink()
+        ->appendStylesheet($this->basePath().'/assets/release/font-awesome/css/font-awesome.min.css')
+        ->appendStylesheet($this->basePath().'/assets/release/dojo/themes/flat/flat.min.css')
+        ->appendStylesheet($this->basePath().'/assets/release/pinwin/flat-styles.min.css')
+        ?>
+        
+    </head>
+	<body class="flat">
+
+        
+        <div id="loadingOverlayWrapper" class="loadingOverlayWrapper">
+            <div class="loadingOverlay"></div>
+        </div>
+
+        <div 
+            data-dojo-type="dijit/layout/LayoutContainer" 
+            data-dojo-props="design:'headline', style:'width:100%;height:100%;'">
+            
+            <div class="main-header" role="header" 
+                data-dojo-type="dijit/layout/ContentPane" 
+                data-dojo-props="region:'top'">
+                <a href="javascript:;" class="navbar-brand pull-left">Pinwin&nbsp;Admin</a>
+                <div class="pull-left">
+                    <?= $this->partial('partial/main_header_menu.phtml', ['menus'=>require 'data/temp/main_header_menu.php'])?>
+                </div>
+                
+                
+                <div class="pull-right">
+                    <a id="header-user" class="info-item" href="javascript:;">
+                        <i class="fa fa-user"></i>
+                    </a>
+                    <div 
+                        data-dojo-type="dijit/Tooltip" 
+                        data-dojo-props="connectId:'header-user',position:['below']">
+                    <?=$this->translate('Admin')?>
+                    </div>
+                    
+                    <a id="header-logout" class="info-item" href="javascript:;">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+                    <div 
+                        data-dojo-type="dijit/Tooltip" 
+                        data-dojo-props="connectId:'header-logout',position:['below']"
+                    >
+                    <?=$this->translate('登出')?>
+                    </div>
+                    
+                    
+                    
+                </div>
+                
+            </div>
+            
+            <div  class="main-side-nav" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'left'">
+                <?= $this->partial('partial/main_sidenavtree.phtml', ['tree_data'=>require 'data/temp/tree_store_source.php'])?>
+            </div>          
+            
+            
+
+            <div id="content-container" data-dojo-type="dijit/layout/LayoutContainer" data-dojo-props="region:'center', splitter:true">
+                <div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region:'center'">
+                    
+                    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title:'<?=$this->translate('管理首頁')?>'">
+                        <?=$this->content?> 
+                    </div>
+                
+                    <!-- 
+                    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title:'Closeable', closable:true">
+                        <p>Just a closable tab.</p>
+                    </div>
+                    -->
+                </div>
+                
+            </div>
+        </div>  
+              
+        <?= 
+        $this->footScript()
+        ->appendDojo($this->basePath().'/assets/release/dojo/dojo/dojo.js')
+        ->appendFile($this->basePath().'/assets/js/loadOverlay.js')
+        ->appendFile($this->basePath().'/module/Board/public/js/common.js');
+        ?>
+	</body>
+</html>
