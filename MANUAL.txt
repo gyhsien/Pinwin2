@@ -4,17 +4,7 @@
 3.node.js 最新
 3.Apache 2.4+
 4.MySQL 5.7+
+5.git bash
+6.wget win32
 
-#或許需要PATH node 跟 php `set PATH=%PATH%;C:\Users\hsien\AppData\Roaming\npm;D:\Server\workspace\php7\pinwin\vendor\bin`
-
-#安裝
-1.composer install
-2.npm install
-#npm 刪除 node_modules 資料夾內
-npm install rimraf -g
-rimraf node_modules
-
-3.[下載最新並經過優化的dojo toolkit](http://download.dojotoolkit.org/release-1.12.2/dojo-release-1.12.2.zip) 並解壓縮至ibrary/dojo 資料夾內
-4.下載 dojo release package http://download.dojotoolkit.org/release-1.12.2/dojo-release-1.12.2.zip 並解壓縮至 assets/release/dojo 資料夾內 
-5.複製library/flat_replace內的檔案 到 library/dojo/themes/flat
-7.gulp all
+git clone 
