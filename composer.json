@@ -2,14 +2,15 @@
     "require": {
         "zendframework/zendframework": "^3.0",
         "gregwar/captcha": "1.*",
-        "twbs/bootstrap-sass": "^3.3",
+		"twbs/bootstrap-sass": "^3.3",
         "fortawesome/font-awesome": "^4.7"
     },
     "autoload": {
         "psr-4": {
-            "Pinwin\\": "library/Pinwin",
-            "PinwinORM\\": "library/PinwinORM"
-        }
+            "Pinwin\\": "vendor/Pinwin",
+            "PinwinORM\\": "vendor/PinwinORM"
+        },
+        "classmap" :["vendor/Browser.php/lib/Browser.php"]
     },
     "require-dev": {
         "zendframework/zend-component-installer": "^1.0",

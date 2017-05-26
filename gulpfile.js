@@ -19,6 +19,8 @@ var bootstrap_sass_conf = {
 	dest : './assets/release/bootstrap/css',
 	src : [ './assets/package/frontend.scss', './assets/package/login.scss']
 }
+
+
 gulp.task('frontend-sass', function() {
 	return gulp.src(bootstrap_sass_conf.src).pipe(sass({
 		includePaths : [ bootstrap_sass_conf.cwd ],
@@ -27,7 +29,7 @@ gulp.task('frontend-sass', function() {
 });
 
 var dojo_flat = {
-	cwd : './library/dojo/themes/flat',
+	cwd : './vendor/dojo/themes/flat',
 	dest : './assets/release/dojo/themes/flat'
 }
 gulp.task('dojo-flat', function() {
@@ -102,18 +104,18 @@ gulp.task('watch', function() {
 	    './vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/*.scss'], 
 	['frontend-sass']);
 	
-	gulp.watch(['./library/dojo/themes/flat/**/*.styl', './library/dojo/themes/flat/**/**/*.styl'], ['dojo-flat-concact']);
+	gulp.watch(['./vendor/dojo/themes/flat/**/*.styl', './vendor/dojo/themes/flat/**/**/*.styl'], ['dojo-flat-concact']);
 	
 	gulp.watch([
-	    './library/dojo/themes/flat/flat.min.tmp.css', 
-	    './library/dojo/themes/flat/flat_dijit.css', 
-	    './library/dojo/themes/flat/styles/styles.css'
+	    './vendor/dojo/themes/flat/flat.min.tmp.css', 
+	    './vendor/dojo/themes/flat/flat_dijit.css', 
+	    './vendor/dojo/themes/flat/styles/styles.css'
 	], ['dojo-flat-dijit-concact']
 	);
 	
 	gulp.watch([
-	    '/library/dojo/themes/flat/**/*_rtl.css', 
-	    '/library/dojo/themes/flat/**/**/*_rtl.css'
+	    '/vendor/dojo/themes/flat/**/*_rtl.css', 
+	    '/vendor/dojo/themes/flat/**/**/*_rtl.css'
 	], ['dojo-flat-rtl-concact']);
 	
 	gulp.watch(['./assets/package/pinwin/flat-styles.css'], ['pinwin-css']);
