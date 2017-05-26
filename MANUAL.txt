@@ -11,7 +11,9 @@
 1.git clone https://github.com/dojo/themes.git vendor/dojo/themes
 2.wget http://download.dojotoolkit.org/release-1.12.2/dojo-release-1.12.2.zip
 3.7z x dojo-release-1.12.2.zip
-4.mv dojo-release-1.12.2 assetsrelease/dojo
+4.
+	cp -R dojo-release-1.12.2/* assets/release/dojo/
+	rm -rf dojo-release-1.12.2
 5.rm dojo-release-1.12.2.zip
 6.npm install
 7.composer install
