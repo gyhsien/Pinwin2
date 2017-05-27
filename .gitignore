@@ -24,3 +24,5 @@
 /.settings
 /.buildpath
 /.project
+/vendor/phar-io
+/vendor/theseer
