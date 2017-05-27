@@ -24,3 +24,5 @@
 10.
 	cp vendor/fortawesome/font-awesome/css/font-awesome.min.css assets/release/font-awesome/css/font-awesome.min.css 
 	cp vendor/fortawesome/font-awesome/fonts/* assets/release/font-awesome/fonts
+11. npm install
+12. gulp all	
