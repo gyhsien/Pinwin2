@@ -1,19 +1,30 @@
 {
     "require": {
-        "zendframework/zendframework": "^3.0",
-        "gregwar/captcha": "1.*",
-		"twbs/bootstrap-sass": "^3.3",
-        "fortawesome/font-awesome": "^4.7"
+        "zendframework\/zendframework": "^3.0",
+        "gregwar\/captcha": "1.*",
+        "twbs\/bootstrap-sass": "^3.3",
+        "fortawesome\/font-awesome": "^4.7"
     },
     "autoload": {
         "psr-4": {
-        
+            "PinwinORM\\": "vendor\/PinwinORM",
+            "Pinwin\\Crypt\\": "vendor\/pinwin\/Crypt\/src",
+            "Pinwin\\Db\\": "vendor\/pinwin\/Db\/src",
+            "Pinwin\\Events\\": "vendor\/pinwin\/Events\/src",
+            "Pinwin\\Extensions\\": "vendor\/pinwin\/Extensions\/src",
+            "Pinwin\\ModuleManager\\": "vendor\/pinwin\/ModuleManager\/src",
+            "Pinwin\\Mvc\\": "vendor\/pinwin\/Mvc\/src",
+            "Pinwin\\Session\\": "vendor\/pinwin\/Session\/src",
+            "Pinwin\\Tools\\": "vendor\/pinwin\/Tools\/src",
+            "Pinwin\\View\\": "vendor\/pinwin\/View\/src"
         },
-        "classmap" :["vendor/Browser.php/lib/Browser.php"]
+        "classmap": [
+            "vendor\/Browser.php\/lib\/Browser.php"
+        ]
     },
     "require-dev": {
-        "zendframework/zend-component-installer": "^1.0",
-        "zendframework/zend-developer-tools": "^1.1",
-        "bjyoungblood/bjy-profiler": "^1.1"
+        "zendframework\/zend-component-installer": "^1.0",
+        "zendframework\/zend-developer-tools": "^1.1",
+        "bjyoungblood\/bjy-profiler": "^1.1"
     }
 }

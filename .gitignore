@@ -21,3 +21,6 @@
 /vendor/webmozart
 /vendor/zendframework
 /vendor/autoload.php
+/.settings
+/.buildpath
+/.project
