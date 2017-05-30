@@ -3,6 +3,6 @@ return [
     'Frontend',
     'Board',
     'Webservice',
-    'ZendDeveloperTools',
-    'BjyProfiler'
+    'BjyProfiler',
+    'ZendDeveloperTools',    
 ];

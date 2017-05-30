@@ -25,10 +25,10 @@ return [
         'adapters'=>[
             'masterDbAdapter'=>[
                 'driver'=>'Pdo_Mysql',
-                'database'=>'pinwin_beta',
+                'database'=>'__bio-god',
                 'username'=>'root',
                 'hostname'=>'127.0.0.1',
-                'password'=>'1234'
+                'password'=>'1234',
             ],
         ]
     ],

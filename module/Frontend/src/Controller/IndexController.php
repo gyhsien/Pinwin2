@@ -11,6 +11,11 @@ class IndexController extends InjectServiceController
     
     public function indexAction()
     {        
+		$adapter = $this->container->get('masterDbAdapter');
+		$sql = new \Zend\Db\Sql\Sql($adapter);
+// 		$select = new \Zend\Db\Sql\Select();
+		$select = $sql->select('grs_admin');
+		$sql->prepareStatementForSqlObject($select)->execute();
 		return new Model\ViewModel();
     }
 

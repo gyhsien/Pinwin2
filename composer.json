@@ -7,6 +7,8 @@
     },
     "autoload": {
         "psr-4": {
+        	"ZendDeveloperTools\\" : "vendor\/DeveloperTools\/src",
+        	"BjyProfiler\\" : "vendor\/BjyProfiler\/src",
             "PinwinORM\\": "vendor\/PinwinORM",
             "Pinwin\\Crypt\\": "vendor\/pinwin\/Crypt\/src",
             "Pinwin\\Db\\": "vendor\/pinwin\/Db\/src",
@@ -23,8 +25,6 @@
         ]
     },
     "require-dev": {
-        "zendframework\/zend-component-installer": "^1.0",
-        "zendframework\/zend-developer-tools": "^1.1",
-        "bjyoungblood\/bjy-profiler": "^1.1"
+        "zendframework\/zend-component-installer": "^1.0"
     }
 }

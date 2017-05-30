@@ -1,7 +1,7 @@
 <?php
 use Pinwin\Mvc\Controller\LazyControllerAbstractFactory;
 use Pinwin\View\Helper\Factory\DelegatorFactory;
-use Zend\ServiceManager\Factory\InvokableFactory;
+// use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     // Initial configuration with which to seed the ServiceManager.
@@ -9,11 +9,7 @@ return [
     'service_manager' => [
         'factories' =>[
             
-        ],
-        'abstract_factories' => [
-            
-        ],
-    
+        ],    
     ],
     
     'controllers' => [

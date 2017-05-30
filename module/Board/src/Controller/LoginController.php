@@ -4,8 +4,6 @@ namespace Board\Controller;
 use Pinwin\Mvc\Controller\InjectServiceController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-use Zend\Math\Rand;
-use Pinwin\Mvc\Model\AdminUserQuery;
 
 class LoginController extends InjectServiceController
 {

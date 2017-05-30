@@ -20,9 +20,10 @@
 8.cp -R vendor/flat_replace/* vendor/dojo/themes/flat
 9.
 	cp vendor/twbs/bootstrap-sass/assets/javascripts/bootstrap.min.js assets/release/bootstrap/js/bootstrap.min.js
-	cp vendor/twbs/bootstrap-sass/assets/fonts/bootstrap/* assets/release/bootstrap/fonts/bootstrap,
+	cp vendor/twbs/bootstrap-sass/assets/fonts/bootstrap/* assets/release/bootstrap/fonts/bootstrap
 10.
 	cp vendor/fortawesome/font-awesome/css/font-awesome.min.css assets/release/font-awesome/css/font-awesome.min.css 
 	cp vendor/fortawesome/font-awesome/fonts/* assets/release/font-awesome/fonts
-11. npm install
-12. gulp all	
+11. gulp all	
+12. git clone https://github.com/zendframework/ZendDeveloperTools.git vendor/DeveloperTools
+13. git clone https://github.com/bjyoungblood/BjyProfiler.git vendor/BjyProfiler

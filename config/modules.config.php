@@ -1,7 +1,7 @@
 <?php
 $module_config = array_merge([
     'Zend\Cache',
-    'Zend\Db',
+    APP_ENV === 'development' ? 'Pinwin\Db' : 'Zend\Db',
     'Zend\Filter',
     'Zend\Form',
     'Zend\I18n',

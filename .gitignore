@@ -26,3 +26,8 @@
 /.project
 /vendor/phar-io
 /vendor/theseer
+/assets/release/dojo/dijit
+/assets/release/dojo/dojo
+/assets/release/dojo/dojox
+/assets/release/dojo/build-report.txt
+/node_modules
