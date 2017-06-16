@@ -23,8 +23,5 @@
         "classmap": [
             "vendor\/Browser.php\/lib\/Browser.php"
         ]
-    },
-    "require-dev": {
-        "zendframework\/zend-component-installer": "^1.0"
     }
 }

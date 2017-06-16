@@ -23,9 +23,10 @@ return [
     */
     'db'=>[
         'adapters'=>[
-            'masterDbAdapter'=>[
-                'driver'=>'Pdo_Mysql',
-                'database'=>'__bio-god',
+            MAIN_DB_ADAPTER=>[
+                'driver'=>'pdo',
+                'dsn' => 'mysql:dbname=pimcore_empty;host=127.0.0.1',
+                'database'=>'pimcore_empty',
                 'username'=>'root',
                 'hostname'=>'127.0.0.1',
                 'password'=>'1234',

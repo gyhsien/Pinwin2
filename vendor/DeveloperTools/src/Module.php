@@ -208,6 +208,7 @@ class Module implements
                         }
                     }
                     */
+                    
                     if ($sm->has(MAIN_DB_ADAPTER) && isset($sm->get('config')['db'])) {
                         $adapter = $sm->get(MAIN_DB_ADAPTER);
                         if ($adapter instanceof ProfilingAdapter) {
