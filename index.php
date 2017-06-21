@@ -2,7 +2,6 @@
 use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
 
-//fuck
 require 'config/constants.php';
 ini_set('error_log', 'data/log/php_errors_' . date("Ymd") . '.log');
 set_time_limit(0);

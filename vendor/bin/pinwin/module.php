@@ -8,15 +8,15 @@ use Zend\Code\Generator\MethodGenerator;
 //use Zend\Code\Generator\BodyGenerator;
 
 /**
- * php vendor/pinwin/bin/module.php --module=r88 --controller=index [--action=index --view=html]
- * php vendor/pinwin/bin/module.php --module=r88 --controller=index --action=index --view=json|html
+ *  php vendor/bin/pinwin/module.php --module=frontend --controller=emaildeposit [--action=index --view=html]
+ *  php vendor/bin/pinwin/module.php --module=frontend --controller=emaildeposit --action=index --view=json|html
  *  
  */
 $basePath = dirname(dirname(dirname(__DIR__)));
 ini_set('error_log', 'vendor/pinwin/bin/php_errors_'.date("Ymd").'.log');
 require 'vendor/autoload.php';
-require 'vendor/Pinwin/Tools/Tools.php';
-require 'vendor/pinwin/bin/class/pinwin/bin_module.php';
+require 'vendor/Pinwin/Tools/src/Tools.php';
+require 'vendor/bin/pinwin/class/bin_module.php';
 
 $config = [];
 
@@ -26,34 +26,34 @@ for($i=1 ; $i < count($argv) ; $i++)
     $config[$str[0]] = preg_replace("/\'|\"/", '', $str[1]);
 }
 try {
-    ob_clean();
+//     ob_clean();
     if(empty($config['module']))
     {
         throw new \Exception('Please set the module value [php vendor/pinwin/bin/module.php --module=modulename].');
     }
     $wordFilter = new SeparatorToCamelCase();    
-    $moduleName = pinwin/bin_module::word_filter($wordFilter, $config['module']);    
+    $moduleName = \Pinwin\bin_module::word_filter($wordFilter, $config['module']);    
     
     $moduleDir = 'module/'.$moduleName;
     
-    pinwin/bin_module::makeAllFolders($moduleDir);    
-    pinwin/bin_module::addModuleFile($moduleDir, $moduleName);    
-    pinwin/bin_module::addModuleLocalconfig($moduleDir, $moduleName);    
-    pinwin/bin_module::addModuleGlobaleconfig($moduleDir, $moduleName);
+    \Pinwin\bin_module::makeAllFolders($moduleDir);    
+    \Pinwin\bin_module::addModuleFile($moduleDir, $moduleName);    
+    \Pinwin\bin_module::addModuleLocalconfig($moduleDir, $moduleName);    
+    \Pinwin\bin_module::addModuleGlobaleconfig($moduleDir, $moduleName);
     if(empty($config['controller']))
     {
         $config['controller'] = 'index';
     }
-    $controllerName = pinwin/bin_module::word_filter($wordFilter, $config['controller']);
+    $controllerName = \Pinwin\bin_module::word_filter($wordFilter, $config['controller']);
     
-    pinwin/bin_module::addModuleController($moduleDir, $moduleName, $controllerName);
+    \Pinwin\bin_module::addModuleController($moduleDir, $moduleName, $controllerName);
     if(empty($config['action']))
     {
         $config['action'] = 'index';
     }
     
     
-    $actionName = lcfirst(pinwin/bin_module::word_filter($wordFilter, $config['action'])) ;
+    $actionName = lcfirst(\Pinwin\bin_module::word_filter($wordFilter, $config['action'])) ;
     $allowViewName = ['html', 'json'];
     if(empty($config['view']))
     {
@@ -66,7 +66,7 @@ try {
         $config['view'] = 'html';
     }
     $view = $config['view'];
-    pinwin/bin_module::addModuleControllerAction(
+    \Pinwin\bin_module::addModuleControllerAction(
         $moduleDir, 
         $moduleName, 
         $controllerName, 

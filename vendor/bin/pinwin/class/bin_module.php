@@ -1,4 +1,5 @@
 <?php
+namespace Pinwin;
 
 use Zend\Code\Generator;
 use Pinwin\Tools\Tools;
@@ -141,10 +142,7 @@ class bin_module
             $fileGenerator->setBody(trim('return '.$valueGenerator->generate().";", "\r"));
     
             file_put_contents('config/url_modules_name.php', $fileGenerator->generate());
-        }else{
-    
         }
-        //$namesGenerator->
     
         $classMapValue = require 'config/url_modules.php';
         if(empty($classMapValue[$moduleName.'\\']))
@@ -164,7 +162,6 @@ class bin_module
     public static function addModuleController($moduleDir, $moduleName, $controllerName)
     {
         $filename = $moduleDir.'/src/Controller/'.$controllerName.'Controller.php';
-        //echo $filename;
         if(!is_file($filename))
         {
             $controllerFileGenerator = new Generator\FileGenerator();
