@@ -67,7 +67,6 @@ body {
 	background-color: #fff;
 }
 
-#content-container .dijitTabContainerTop-dijitContentPane{padding-left:1em;}
 
 .loadingOverlay {
 	background: #fff url('images/loadingAnimation.gif') no-repeat /*10px 23px*/;

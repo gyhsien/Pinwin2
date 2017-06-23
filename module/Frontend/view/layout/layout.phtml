@@ -1,0 +1,26 @@
+<?php use SebastianBergmann\CodeCoverage\Report\PHP;?>
+<?= $this->doctype() ?>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <?=$this->headTitle('Pinwin2')->setSeparator('-')->setAutoEscape(false)?>
+        <?= $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
+        <?php
+        //$this->HeadLink()->appendStylesheet($this->basePath().'/assets/release/bootstrap/css/frontend.css')
+        ?>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Frontend Module</h2>
+            <?= $this->content ?>
+        </div>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>				
+		<script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js" integrity="sha256-JklDYODbg0X+8sPiKkcFURb5z7RvlNMIaE3RA2z97vw=" crossorigin="anonymous"></script>				
+        <?php        
+        //$this->HeadScript()->appendFile($this->basePath().'/assets/release/jquery/jquery-3.1.1.min.js');
+        //$this->HeadScript()->appendFile($this->basePath().'/assets/release/jquery/jquery-migrate-3.0.0.min.js');
+        ?>
+        <?=$this->HeadScript()?>
+	</body>
+</html>
