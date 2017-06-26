@@ -25,5 +25,3 @@
 	cp vendor/fortawesome/font-awesome/css/font-awesome.min.css assets/release/font-awesome/css/font-awesome.min.css 
 	cp vendor/fortawesome/font-awesome/fonts/* assets/release/font-awesome/fonts
 11. gulp all	
-12. git clone https://github.com/zendframework/ZendDeveloperTools.git vendor/DeveloperTools
-13. git clone https://github.com/bjyoungblood/BjyProfiler.git vendor/BjyProfiler
