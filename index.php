@@ -15,14 +15,17 @@ if (php_sapi_name() === 'cli-server') {
     unset($path);
 }
 
+
+/** @var $loader \Composer\Autoload\ClassLoader */
 // Composer autoloading
 $loader = include __DIR__ . '/vendor/autoload.php';
+
+
 $urlModules = include __DIR__ . '/config/url_modules.php';
 foreach ($urlModules as $namespace => $path) {
     $loader->setPsr4($namespace, $path);
 }
 $loader->register(true);
-
 
 if (! class_exists(Application::class)) {
     throw new RuntimeException("Unable to load application.\n" . "- Type `composer install` if you are developing locally.\n" . "- Type `vagrant ssh -c 'composer install'` if you are using Vagrant.\n" . "- Type `docker-compose run zf composer install` if you are using Docker.\n");

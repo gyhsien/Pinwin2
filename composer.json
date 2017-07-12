@@ -6,6 +6,9 @@
         "fortawesome\/font-awesome": "^4.7"
     },
     "autoload": {
+    	"psr-0":{
+        	"Zend_": "vendor/zendframework1/"
+        },
         "psr-4": {
         	"ZendDeveloperTools\\" : "vendor\/DeveloperTools\/src",
         	"BjyProfiler\\" : "vendor\/BjyProfiler\/src",
@@ -23,5 +26,9 @@
         "classmap": [
             "vendor\/Browser.php\/lib\/Browser.php"
         ]
-    }
+    },   
+    "include-path": [
+        "vendor/zendframework1/"
+    ]
+    
 }

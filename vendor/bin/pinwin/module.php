@@ -8,7 +8,7 @@ use Zend\Code\Generator\MethodGenerator;
 //use Zend\Code\Generator\BodyGenerator;
 
 /**
- *  php vendor/bin/pinwin/module.php --module=frontend --controller=emaildeposit [--action=index --view=html]
+ *  php vendor/bin/pinwin/module.php --module=frontend --controller=app [--action=index --view=html]
  *  php vendor/bin/pinwin/module.php --module=frontend --controller=emaildeposit --action=index --view=json|html
  *  
  */

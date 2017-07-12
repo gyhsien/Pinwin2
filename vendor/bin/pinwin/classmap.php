@@ -11,6 +11,7 @@ $libraryFoldes = new \RecursiveDirectoryIterator($library);
 
 $filter = new Zend\Filter\Word\SeparatorToCamelCase();
 $psr4 = [];
+
 foreach ($libraryFoldes as $folder)
 {
     //$folder = new \FilesystemIterator();

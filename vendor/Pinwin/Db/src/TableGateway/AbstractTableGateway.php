@@ -30,6 +30,32 @@ class AbstractTableGateway extends TableGateway{
         //$this->featureSet->addFeature();
     }
     
+    /**
+     * Select
+     *
+     * @param Where|\Closure|string|array $where
+     * @param bool $returnSelect
+     * @return mixed
+     */
+    public function select($where = null, $returnSelect=false)
+    {
+        if (!$this->isInitialized) {
+            $this->initialize();
+        }
+        
+        $select = $this->sql->select();
+        
+        if ($where instanceof \Closure) {
+            $where($select);
+        } elseif ($where !== null) {
+            $select->where($where);
+        }
+        if($returnSelect)
+        {
+            return $select;
+        }
+        return $this->selectWith($select);
+    }
     
     /**
      * 

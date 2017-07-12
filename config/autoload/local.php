@@ -11,33 +11,18 @@ return [
     
     ],
     
-    //自定義extensions
-    /*
-    'extensions' => [
-        'dependent'=>'pw_extensions',
-        'relashionship'=>'pw_extension_installation',
-        'uses' =>[            
-            'User'
-        ],
-    ],
-    */
     'db'=>[
         'adapters'=>[
             MAIN_DB_ADAPTER=>[
-                'driver'=>'pdo',
-                'dsn' => 'mysql:dbname=pimcore_empty;host=127.0.0.1',
-                'database'=>'pimcore_empty',
+                'driver'=>'pdo_mysql',
+                'database'=>'pinwin2',
                 'username'=>'root',
                 'hostname'=>'127.0.0.1',
                 'password'=>'1234',
             ],
         ]
     ],
-    'session_containers' => [
-//         'boardSession',
-//         'frontendSession',
-//         'webserviceSession'
-    ],
+    'session_containers' => [],
     'session_config' => [
         'remember_me_seconds' => 1800,
     ],

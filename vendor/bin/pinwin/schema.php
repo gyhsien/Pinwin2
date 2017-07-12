@@ -1,7 +1,8 @@
 <?php
-//php vendor/pinwin/bin/schema.php --config=Pinwin2Adapter
+//php vendor/bin/pinwin/schema.php
+//php vendor/bin/pinwin/schema.php --config=Pinwin2Adapter
 /**
- *php vendor/pinwin/bin/schema.php --driver=pdo_mysql --database=pimcore --username=root  --hostname=127.0.0.1 --password=1234
+ *php vendor/bin/pinwin/schema.php --driver=pdo_mysql --database=pimcore --username=root  --hostname=127.0.0.1 --password=1234
  * --driver=pdo_mysql --database=pimcore --username=root  --hostname=127.0.0.1 --password=1234
  */
 use Zend\Db\Adapter\Adapter as DbAdapter;
@@ -10,41 +11,62 @@ use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\PropertyGenerator;
 use Zend\Code\Generator\PropertyValueGenerator;
-use Zend\Db\Metadata\Object\TableObject;
+//use Zend\Db\Metadata\Object\TableObject;
+
+if(!defined('MAIN_DB_ADAPTER'))
+{
+    require 'config/constants.php';
+}
 
 $start = time();
 
 $basePath = dirname(dirname(dirname(__DIR__)));
-ini_set('error_log', 'vendor/pinwin/bin/php_errors_'.date("Ymd").'.log');
+ini_set('error_log', 'vendor/bin/pinwin/php_errors_'.date("Ymd").'.log');
 require 'vendor/autoload.php';
-require 'vendor/Pinwin/Tools/Tools.php';
+// require 'vendor/Pinwin/Tools/Tools.php';
 
 try {
-    $config = [
-        'options'=>['buffer_results'=>true],
-        'charset'=>'utf8'        
-    ];
-    for($i=1 ; $i < count($argv) ; $i++)
+    
+    
+    if(count($argv) == 1)
     {
-        $str = explode('=', preg_replace("/^\-\-/", '', $argv[$i]));
-        $config[$str[0]] = preg_replace("/\'|\"/", '', $str[1]);
-        //echo $str[0]."\n";
+        $sysConfig = array_merge_recursive(
+            require 'config/autoload/global.php', 
+            require 'config/autoload/local.php'
+        );
+        
+        $config = $sysConfig['db']['adapters'][MAIN_DB_ADAPTER];
+        
+    }else{
+        $config = [
+            'options'=>['buffer_results'=>true],
+            'charset'=>'utf8'
+        ];
+        
+        for($i=1 ; $i < count($argv) ; $i++)
+        {
+            $str = explode('=', preg_replace("/^\-\-/", '', $argv[$i]));
+            $config[$str[0]] = preg_replace("/\'|\"/", '', $str[1]);
+            //echo $str[0]."\n";
+        }
+        
+        if(
+            (empty($config['driver']) ||
+                empty($config['database']) ||
+                empty($config['username']) ||
+                empty($config['hostname']) ||
+                empty($config['password']))  && $config['config']
+            
+            )
+        {
+            $index = $config['config'];
+            $systemConfig = require 'config/autoload/local.php';
+            $config = array_merge($config, $systemConfig['db']['adapters'][$index]);
+            unset($config['config']);
+        }        
     }
     
-    if( 
-        (empty($config['driver']) ||
-        empty($config['database']) ||
-        empty($config['username']) ||
-        empty($config['hostname']) ||
-        empty($config['password']))  && $config['config']
-        
-    )
-    {
-        $index = $config['config'];
-        $systemConfig = require 'config/autoload/local.php';
-        $config = array_merge($config, $systemConfig['db']['adapters'][$index]);
-        unset($config['config']);
-    } 
+    
     
     $dbAdapter = new DbAdapter($config);
     
@@ -82,19 +104,28 @@ try {
         $baseTableClassGenerator = new ClassGenerator();
         $baseTableClassGenerator->setAbstract(true);
         $baseTableClassGenerator->setExtendedClass('AbstractTableGateway');
-        $baseTableClassGenerator->addConstant('TABLE', $table);
+        $baseTableClassGenerator->addConstant('TABLE', 'PREFIX_TABLE.\''.$table);
         $baseTableClassGenerator->setName('Base'.$tableClassName);
         $baseTableFileGenerator->setClass($baseTableClassGenerator);
         $abstractFilePath = str_replace("\\", '/', $baseNamespace);
         \Pinwin\Tools\Tools::mkdir_r('vendor/'.$abstractFilePath);
         
-        if(file_put_contents('vendor/'.$abstractFilePath.'/Base'.$tableClassName.'.php', $baseTableFileGenerator->generate()))
+        $baseTableCode = $baseTableFileGenerator->generate();
+        $baseTableCode = str_replace('\'PREFIX_TABLE.\\\'', 'PREFIX_TABLE.\'', $baseTableCode);
+        $baseTableFilePath = 'vendor/'.$abstractFilePath.'/Base'.$tableClassName.'.php';
+        
+        if(is_file($baseTableFilePath))
         {
-            $logContent.= "[Build success:] vendor/".$abstractFilePath.'/Base'.$tableClassName.".php\n";
-            echo "[Build success:] vendor/".$abstractFilePath.'/Base'.$tableClassName.".php\n";
+            echo "The file [".$baseTableFilePath."] already exists\n";
         }else{
-            $logContent.= "[Build failed:] vendor/".$abstractFilePath.'/Base'.$tableClassName.".php\n";
-            echo "[Build failed:] vendor/".$abstractFilePath.'/Base'.$tableClassName.".php\n";
+            if(file_put_contents($baseTableFilePath, $baseTableCode))
+            {
+                $logContent.= "[Build success:] ".$baseTableFilePath.PHP_EOL;
+                echo "[Build success:] ".$baseTableFilePath.PHP_EOL;
+            }else{
+                $logContent.= "[Build failed:] ".$baseTableFilePath.PHP_EOL;
+                echo "[Build failed:] ".$baseTableFilePath.PHP_EOL;
+            }            
         }
         
         $baseEntityFileGenerator = new FileGenerator([
@@ -106,7 +137,7 @@ try {
         $baseEntityClassGenerator->setExtendedClass('AbstractRowGateway');
         $baseEntityClassGenerator->addProperty(
             'table', 
-            $table, 
+            'PREFIX_TABLE.\''.$table, 
             PropertyGenerator::FLAG_PROTECTED
         );
         
@@ -134,17 +165,24 @@ try {
         $baseEntityFileGenerator->setClass($baseEntityClassGenerator);
         $abstractFilePath = str_replace("\\", '/', $baseNamespace);
         \Pinwin\Tools\Tools::mkdir_r('vendor/'.$abstractFilePath);
-        if(file_put_contents(
-            'vendor/'.$abstractFilePath.'/Base'.$entityClassName.'.php', 
-            $baseEntityFileGenerator->generate()
-            )
-        ){
-            $logContent.= "[Build success:] vendor/".$abstractFilePath.'/Base'.$entityClassName.".php\n";
-            echo "[Build success:] vendor/".$abstractFilePath.'/Base'.$entityClassName.".php\n";
+        
+        $baseEntityCode = $baseEntityFileGenerator->generate();
+        $baseEntityCode = str_replace('\'PREFIX_TABLE.\\\'', 'PREFIX_TABLE.\'', $baseEntityCode);
+        $baseEntityFilePath = 'vendor/'.$abstractFilePath.'/Base'.$entityClassName.'.php';
+        
+        if(is_file($baseEntityFilePath))
+        {
+            echo "The file [".$baseEntityFilePath."] already exists\n";
         }else{
-            $logContent.= "[Build failed:] vendor/".$abstractFilePath.'/Base'.$entityClassName.".php\n";
-            echo "[Build failed:] vendor/".$abstractFilePath.'/Base'.$entityClassName.".php\n";
-        }        
+            if(file_put_contents($baseEntityFilePath, $baseEntityCode)
+                ){
+                    $logContent.= "[Build success:] ".$baseEntityFilePath.PHP_EOL;
+                    echo "[Build success:] ".$baseEntityFilePath.PHP_EOL;
+            }else{
+                $logContent.= "[Build failed:] ".$baseEntityFilePath.PHP_EOL;
+                echo "[Build failed:] ".$baseEntityFilePath.PHP_EOL;
+            }            
+        }
         
         $tableFileGenerator = new FileGenerator([
             'namespace' => $namespace,
@@ -156,19 +194,22 @@ try {
         $tableClassGenerator->setName($tableClassName);
         $tableFileGenerator->setClass($tableClassGenerator);
         $filePath = str_replace("\\", '/', $namespace);
-        if(!is_file('vendor/'.$filePath.'/'.$tableClassName.'.php'))
+        
+        $tableClassFilePath = 'vendor/'.$filePath.'/'.$tableClassName.'.php';
+        if(is_file($tableClassFilePath))
         {
-            if(file_put_contents('vendor/'.$filePath.'/'.$tableClassName.'.php', $tableFileGenerator->generate()))
-            {
-                $logContent.= "[Build success:] vendor/".$filePath.'/'.$tableClassName.".php\n";
-                echo "[Build success:] vendor/".$filePath.'/'.$tableClassName.".php\n";
-            }else{
-                $logContent.= "[Build failed:] vendor/".$filePath.'/'.$tableClassName.".php\n";
-                echo "[Build failed:] vendor/".$filePath.'/'.$tableClassName.".php\n";
-            }
+            $logContent.= "The file [".$tableClassFilePath."] already exists\n";
+            echo "The file [".$tableClassFilePath."] already exists\n";
         }else{
-            $logContent.= "The file [vendor/".$filePath.'/'.$tableClassName.".php] already exists\n";
-            echo "The file [vendor/".$filePath.'/'.$tableClassName.".php] already exists\n";
+            if(file_put_contents($tableClassFilePath, $tableFileGenerator->generate()))
+            {
+                $logContent.= "[Build success:] ".$tableClassFilePath.PHP_EOL;
+                echo "[Build success:] ".$tableClassFilePath.PHP_EOL;
+            }else{
+                $logContent.= "[Build failed:] ".$tableClassFilePath.PHP_EOL;
+                echo "[Build failed:] ".$tableClassFilePath.PHP_EOL;
+            }
+            
         }
         
         $entityFileGenerator = new FileGenerator([
@@ -182,22 +223,22 @@ try {
         $entityFileGenerator->setClass($entityClassGenerator);
         $filePath = str_replace("\\", '/', $namespace);
         \Pinwin\Tools\Tools::mkdir_r('vendor/'.$filePath);
-        if(!is_file('vendor/'.$filePath.'/'.$entityClassName.'.php'))
+        
+        $entityClassFilePath = 'vendor/'.$filePath.'/'.$entityClassName.'.php';
+        if(is_file($entityClassFilePath))
         {
-            if(file_put_contents(
-                'vendor/'.$filePath.'/'.$entityClassName.'.php',
-                $entityFileGenerator->generate()
-                )
-                ){
-                    $logContent.= "[Build success:] vendor/".$filePath.'/'.$entityClassName.".php\n";
-                    echo "[Build success:] vendor/".$filePath.'/'.$entityClassName.".php\n";
-            }else{
-                $logContent.= "[Build failed:] vendor/".$filePath.'/'.$entityClassName.".php\n";
-                echo "[Build failed:] vendor/".$filePath.'/'.$entityClassName.".php\n";
-            }            
+            $logContent.= "The file [".$entityClassFilePath."] already exists\n";
+            echo "The file [".$entityClassFilePath."] already exists\n";
         }else{
-            $logContent.= "The file [vendor/".$filePath.'/'.$entityClassName.".php] already exists\n";
-            echo "The file [vendor/".$filePath.'/'.$entityClassName.".php] already exists\n";
+            if(file_put_contents($entityClassFilePath, $entityFileGenerator->generate())
+                ){
+                    $logContent.= "[Build success:] ".$entityClassFilePath.PHP_EOL;
+                    echo "[Build success:] ".$entityClassFilePath.PHP_EOL;
+            }else{
+                $logContent.= "[Build failed:] ".$entityClassFilePath.PHP_EOL;
+                echo "[Build failed:] ".$entityClassFilePath.PHP_EOL;
+            }
+            
         }
         
         echo "\n";
@@ -205,8 +246,9 @@ try {
     echo "Done.\n";
     $end = time();
     echo "Total spent : ". ($end-$start) ." seconds"; 
-    file_put_contents('vendor/pinwin/bin/'.$config['database'].date("-Y-m-d").'.log', $logContent);
+    file_put_contents('vendor/bin/pinwin/'.$config['database'].date("-Y-m-d").'.log', $logContent);
 } catch (Exception $e) {
-    echo $e->getMessage();
+    var_export($e);
+//     echo $e->getMessage();
 }
 
